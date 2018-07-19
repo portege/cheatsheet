@@ -1,0 +1,53 @@
+server {
+        listen 80;
+        server_name _;
+
+        location ~ /do_([\d-]+)x([\d-]+)/(.*) {
+                set $s3_bucket        's3bucket.s3-ap-southeast-1.amazonaws.com';
+                set $url_full         '$1';
+
+                proxy_http_version     1.1;
+                proxy_set_header       Host $s3_bucket;
+                proxy_set_header       Authorization '';
+                proxy_hide_header      x-amz-id-2;
+                proxy_hide_header      x-amz-request-id;
+                proxy_hide_header      Set-Cookie;
+                proxy_ignore_headers   "Set-Cookie";
+                proxy_buffering        on;
+                proxy_intercept_errors on;
+
+                resolver               8.8.8.8 valid=300s;
+                resolver_timeout       10s;
+
+                image_filter                resize $1 $2;
+                image_filter_jpeg_quality   100;
+                image_filter_buffer         30M;
+                proxy_read_timeout      120s;
+                proxy_send_timeout      120s;
+                proxy_pass                  http://$s3_bucket/$3;
+        }
+
+        location ~ /(.*) {
+                try_files                   /$1 @img;
+        }
+
+        location @img {
+                set $s3_bucket        's3bucket.s3-ap-southeast-1.amazonaws.com';
+                set $url_full         '$1';
+
+                proxy_http_version     1.1;
+                proxy_set_header       Host $s3_bucket;
+                proxy_set_header       Authorization '';
+                proxy_hide_header      x-amz-id-2;
+                proxy_hide_header      x-amz-request-id;
+                proxy_hide_header      Set-Cookie;
+                proxy_ignore_headers   "Set-Cookie";
+                proxy_buffering        off;
+                proxy_intercept_errors on;
+
+                resolver               8.8.8.8 valid=300s;
+                resolver_timeout       10s;
+
+                proxy_pass             http://$s3_bucket/$url_full;
+        }
+}

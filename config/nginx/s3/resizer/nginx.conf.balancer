@@ -1,0 +1,13 @@
+server {
+        listen 80;
+        server_name theweb.com;
+
+        location ~ /(.*) {
+                try_files                   /$1 @img;
+        }
+
+        location @img {
+                include conf.d/param;
+                proxy_pass             http://lokal;
+        }
+}

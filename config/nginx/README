@@ -1,0 +1,5 @@
+/usr/share/nginx/html/404.html
+/usr/share/nginx/html/50x.html
+/etc/nginx/nginx.conf
+/usr/bin/php-fastcgi
+/etc/init.d/spawn-fcgi

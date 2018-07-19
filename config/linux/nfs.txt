@@ -1,0 +1,12 @@
+exports
+=======
+# destination ip
+/remote/source/dir                  10.0.0.3(ro,sync)
+
+nfstab
+======
+# source ip
+10.0.0.2:/remote/source/dir                     /local/dir        nfs rw 0 0
+
+
+

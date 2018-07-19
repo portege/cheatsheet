@@ -1,0 +1,8 @@
+proxy_read_timeout      120s;
+proxy_send_timeout      120s;
+proxy_cache             stat;
+proxy_cache_valid       200 302  60m;
+proxy_cache_valid       404      1m;
+proxy_buffers           8 24k;
+proxy_buffer_size       2k;
+proxy_set_header        Host    $host;

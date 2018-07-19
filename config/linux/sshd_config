@@ -1,0 +1,6 @@
+#chroot
+Match Group sftp_users
+  ChrootDirectory /data/%u
+  ForceCommand internal-sftp
+  X11Forwarding no
+  AllowTcpForwarding no

@@ -1,0 +1,63 @@
+[mysqld]
+skip-innodb
+skip-name-resolve
+key_buffer = 512M
+myisam_sort_buffer_size = 64M
+join_buffer_size = 1M
+read_buffer_size = 1M
+sort_buffer_size = 2M
+table_cache = 1800
+thread_cache_size = 384
+connect_timeout = 10
+tmp_table_size = 64M
+max_connections = 900
+max_heap_table_size = 64M
+max_allowed_packet = 64M
+max_connect_errors = 1000
+#max_allowed_packet = 1M
+#max_connect_errors = 999999
+read_rnd_buffer_size = 524288
+bulk_insert_buffer_size = 8M
+query_cache_limit = 4M
+query_cache_size = 128M
+query_cache_type = 1
+query_prealloc_size = 65536
+query_alloc_block_size = 131072
+default-storage-engine = MyISAM
+
+#master-master replication
+server-id = 68
+replicate-same-server-id = 0
+auto-increment-increment = 2
+auto-increment-offset = 1
+
+master-host = 10.50.12.70
+master-user = username
+master-password = password
+master-connect-retry = 60
+replicate-do-db = 
+
+log-bin = /var/log/mysql/mysql-bin.log
+binlog-do-db = dbname
+
+relay-log = /var/lib/mysql/slave-relay.log
+relay-log-index = /var/lib/mysql/slave-relay-log.index
+
+expire_logs_days = 3
+max_binlog_size = 500M
+
+
+[mysqld_safe]
+nice = -5
+open_files_limit = 8192
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[myisamchk]
+key_buffer = 64M
+sort_buffer = 64M
+read_buffer = 16M
+write_buffer = 16M
+

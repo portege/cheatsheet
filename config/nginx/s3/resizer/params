@@ -1,0 +1,23 @@
+set $s3_bucket        "${bucket}.s3-ap-southeast-1.amazonaws.com";
+set $url_full         '$1';
+
+proxy_http_version     1.1;
+proxy_set_header       Host $s3_bucket;
+proxy_set_header       Authorization '';
+proxy_hide_header      x-amz-id-2;
+proxy_hide_header      x-amz-request-id;
+proxy_hide_header      Set-Cookie;
+proxy_ignore_headers   "Set-Cookie";
+proxy_buffering        on;
+proxy_intercept_errors on;
+
+resolver               8.8.8.8 valid=300s;
+resolver_timeout       10s;
+
+proxy_read_timeout      120s;
+proxy_send_timeout      120s;
+proxy_cache             stat;
+proxy_cache_valid       200 302  60m;
+proxy_cache_valid       404      1m;
+proxy_buffers 8 24k;
+proxy_buffer_size 2k;

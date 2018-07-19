@@ -1,0 +1,21 @@
+wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+
+** vim /etc/nginx/nginx.conf **
+geoip_country   /etc/nginx/geoip/GeoIP.dat;
+geoip_city      /etc/nginx/geoip/GeoLiteCity.dat;
+
+** vim /etc/nginx/fastcgi_params **
+fastcgi_param GEOIP_COUNTRY_CODE $geoip_country_code;
+fastcgi_param GEOIP_COUNTRY_CODE3 $geoip_country_code3;
+fastcgi_param GEOIP_COUNTRY_NAME $geoip_country_name;
+
+fastcgi_param GEOIP_CITY_COUNTRY_CODE $geoip_city_country_code;
+fastcgi_param GEOIP_CITY_COUNTRY_CODE3 $geoip_city_country_code3;
+fastcgi_param GEOIP_CITY_COUNTRY_NAME $geoip_city_country_name;
+fastcgi_param GEOIP_REGION $geoip_region;
+fastcgi_param GEOIP_CITY $geoip_city;
+fastcgi_param GEOIP_POSTAL_CODE $geoip_postal_code;
+fastcgi_param GEOIP_CITY_CONTINENT_CODE $geoip_city_continent_code;
+fastcgi_param GEOIP_LATITUDE $geoip_latitude;
+fastcgi_param GEOIP_LONGITUDE $geoip_longitude;
